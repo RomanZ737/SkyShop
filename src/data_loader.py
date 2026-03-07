@@ -3,8 +3,6 @@ import logging
 import os
 from typing import Any
 
-import pandas as pd
-
 # Путь к папке с лог-файлами
 LOG_FILE_PATH = os.path.join(os.path.dirname(__file__), "../logs/")
 
@@ -29,8 +27,6 @@ def get_data(data_source: str = 'json') -> Any:
     """
     if data_source == 'json':
         return data_loader_json(DATA_FILE_PATH + data_file_name)
-    elif data_source == 'xlsx':
-        return data_loader_xlsx(DATA_FILE_PATH + data_file_name)
     else:
         return []
 
@@ -61,24 +57,3 @@ def data_loader_json(file_path: str = "") -> Any:
         print("Ошибка: ", e)
         return []
     return data
-
-
-def data_loader_xlsx(file_path: str = "") -> list:
-    """
-    Функция принимает путь к файлу (если данные будут загружаться из файла)
-    и источник данных, возвращает список словарей с транзакциями
-    """
-    logger.info(f"Открываем файл XLSX с транзакциями {file_path}")
-    try:
-        excel_data = pd.read_excel(file_path)
-        logger.info(f"Файл XLSX {file_path} успешно открыт")
-    except FileNotFoundError as e:
-        logger.error(f"Ошибка: {e}")
-        return []
-    except TypeError as e:
-        logger.error(f"Ошибка: {e}")
-        return []
-    except Exception as e:
-        logger.error(f"Ошибка: {e}")
-        return []
-    return excel_data.to_dict("records")
