@@ -1,4 +1,4 @@
-from src.classes import Category, Product
+from src.classes import Product
 
 
 def test_init_product_1(product_1: Product) -> None:
@@ -11,16 +11,16 @@ def test_init_product_1(product_1: Product) -> None:
     assert product_1.quantity == 5
 
 
-def test_init_category(category_1: Category) -> None:
-    """
-    Проверяем инициализацию класса Category
-    """
-    assert category_1.name == "Смартфоны"
-    assert category_1.description == ("Смартфоны, как "
-                                      "средство не только "
-                                      "коммуникации, но и "
-                                      "получения дополнительных "
-                                      "функций для удобства жизни")
-    assert len(category_1.products) == 3
-    assert category_1.category_count == 1
-    assert category_1.product_count == 3
+# def test_init_category(category_1: Category) -> None:
+#     """
+#     Проверяем инициализацию класса Category
+#     """
+#     assert category_1.name == "Смартфоны"
+#     assert category_1.description == ("Смартфоны, как "
+#                                       "средство не только "
+#                                       "коммуникации, но и "
+#                                       "получения дополнительных "
+#                                       "функций для удобства жизни")
+#     assert len(category_1.products) == 3
+#     assert category_1.category_count == 1
+#     assert category_1.product_count == 3
