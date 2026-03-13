@@ -1,3 +1,5 @@
+import pytest
+
 from src.classes import Category, Product, ProductIterator
 
 
@@ -19,3 +21,10 @@ def test_iter_object(category1: Category) -> None:
     assert next(iterator) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
     assert next(iterator) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
     assert next(iterator) == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+
+    with pytest.raises(StopIteration):
+        next(iterator)
+
+
+def test_category_str(category1: Category) -> None:
+    assert str(category1) == 'Смартфоны, количество продуктов: 27 шт.\n'
