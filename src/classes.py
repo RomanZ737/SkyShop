@@ -54,6 +54,8 @@ class Product:
                 self.__price = price
             else:
                 print('Действие отменено')
+        else:
+            self.__price = price
 
 
 class Category:
@@ -73,7 +75,10 @@ class Category:
         Category.category_count += 1
 
     def __str__(self) -> str:
-        return f"{self.name}, количество продуктов: {self.product_count} шт.\n"
+        product_num = 0
+        for item in self.__products:
+            product_num += item.quantity
+        return f"{self.name}, количество продуктов: {product_num} шт.\n"
 
     def add_product(self, product: Product) -> None:
         self.__products.append(product)
@@ -108,9 +113,13 @@ class ProductIterator:
         """
         Возвращает следующее значение интератора
         """
-        product_list = self.category.products.split('\n')
-        if self.index < int(self.category.product_count):
-            product_item = product_list[self.index]
+        all_products_str = self.category.products
+        count_symbol = all_products_str.count('\n')
+        product_list = all_products_str.split('\n', maxsplit=count_symbol-1)
+        print('Product list:', product_list)
+        print(f'self.index: {self.index} < int(self.category.product_count) {product_list}')
+        if self.index < len(product_list):
+            product_item = product_list[self.index].replace('\n', '')
             self.index += 1
             return product_item
         else:
