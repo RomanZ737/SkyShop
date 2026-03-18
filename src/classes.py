@@ -19,9 +19,12 @@ class Product:
 
     def __add__(self, other: 'Product') -> float:
         """
+        Проверяет, что продукт преналежит классу Product и производит слажение или возвращает ошибку.
         :param other: Эксемпляр класса Product
         :return: Возвращает сумму произведений цены и количества
         """
+        if type(other) is not type(self):
+            raise TypeError("Продукты разного типа нельзя складывать")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
     @classmethod
@@ -81,8 +84,11 @@ class Category:
         return f"{self.name}, количество продуктов: {product_num} шт.\n"
 
     def add_product(self, product: Product) -> None:
-        self.__products.append(product)
-        Category.category_count += 1
+        if issubclass(type(product), Product):
+            self.__products.append(product)
+            Category.category_count += 1
+        else:
+            raise TypeError('невозможно добавить этот продукт')
 
     @property
     def products(self) -> str:
@@ -124,3 +130,29 @@ class ProductIterator:
             return product_item
         else:
             raise StopIteration
+
+
+class Smartphone(Product):
+    """Класс для отдельной категории товаров - «Смартфон».
+        Наследуется от класса Product
+    """
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 efficiency: float, model: str, memory: int, color: str):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+    """ Класс для отдельной категории товаров - «Трава газонная».
+        Наследуется от класса Product
+    """
+
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 country: str, germination_period: str, color: str):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
