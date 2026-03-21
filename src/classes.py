@@ -1,4 +1,10 @@
-class Product:
+from typing import Any, Union
+
+from src.base_classes import BaseClass, BaseClassCategory
+from src.mixins_classes import PrintMixin
+
+
+class Product(BaseClass, PrintMixin):
     """
     Класс Продукт, который содержим общие сведения о продукте
     """
@@ -13,11 +19,12 @@ class Product:
         self.__price = price
         self.quantity = quantity
         Product.instances.append(self)
+        super().__init__()
 
     def __str__(self) -> str:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other: 'Product') -> float:
+    def __add__(self, other: 'Product') -> Any:
         """
         Проверяет, что продукт преналежит классу Product и производит слажение или возвращает ошибку.
         :param other: Эксемпляр класса Product
@@ -61,7 +68,7 @@ class Product:
             self.__price = price
 
 
-class Category:
+class Category(BaseClassCategory):
     """
     Класс Категория, который содержит общие сведения о категориях товаров
     """
@@ -83,7 +90,7 @@ class Category:
             product_num += item.quantity
         return f"{self.name}, количество продуктов: {product_num} шт.\n"
 
-    def add_product(self, product: Product) -> None:
+    def add_product(self, product: object) -> None:
         if issubclass(type(product), Product):
             self.__products.append(product)
             Category.category_count += 1
@@ -156,3 +163,36 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
+
+class Order(BaseClassCategory):
+
+    ID = 1
+
+    def __init__(self, products: list) -> None:
+        self.order_num = self.ID
+        self.__products = products
+        Order.ID += 1
+
+    def add_product(self, product: object) -> None:
+        """
+        Метод добавляет новый продукт в заказ
+        """
+        if issubclass(type(product), Product):
+            self.__products.append(product)
+        else:
+            raise TypeError('невозможно добавить этот продукт')
+
+    @property
+    def total_price(self) -> Any:
+        """
+        Метод подсчитывает общую стоимость заказов
+        """
+        return len(self.__products) * self.__products[0].price
+
+    @property
+    def products(self) -> str:
+        result_list = ''
+        for item in self.__products:
+            result_list += f'{str(item)}\n'
+        return result_list
