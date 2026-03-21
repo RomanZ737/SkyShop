@@ -166,6 +166,9 @@ class LawnGrass(Product):
 
 
 class Order(BaseClassCategory):
+    """
+    Класс служит для создания заказов
+    """
 
     ID = 1
 
