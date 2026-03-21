@@ -4,14 +4,14 @@ from src.classes import Category, Product, ProductIterator
 
 
 def test_product_str(product_1: Product, product4: Product) -> None:
-    assert str(product_1) == 'Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.'
+    assert str(product_1) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
 
 
 def test_product_add(product_1: Product, product4: Product) -> None:
     print(product_1)
     print(product4)
     print(product_1 + product4)
-    assert str(product_1 + product4) == '1761000.0'
+    assert str(product_1 + product4) == "1761000.0"
 
 
 def test_iter_object(category1: Category) -> None:
@@ -27,4 +27,4 @@ def test_iter_object(category1: Category) -> None:
 
 
 def test_category_str(category1: Category) -> None:
-    assert str(category1) == 'Смартфоны, количество продуктов: 27 шт.\n'
+    assert str(category1) == "Смартфоны, количество продуктов: 27 шт.\n"

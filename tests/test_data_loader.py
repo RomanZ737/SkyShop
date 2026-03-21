@@ -7,7 +7,7 @@ def test_json_rise_error(wrong_data_for_json_file_open: str) -> None:
     mock_open_file = mock_open(read_data=wrong_data_for_json_file_open)
     with patch("src.data_loader.open", mock_open_file):
         result = data_loader_json(DATA_FILE_PATH + "products.json")
-        assert str(result) == '[]'
+        assert str(result) == "[]"
         mock_open_file.assert_called_once_with(DATA_FILE_PATH + "products.json", encoding="utf-8")
 
     # mock_open_file = mock_open(read_data=wrong_data_for_json_file_open_2)

@@ -1,8 +1,9 @@
-from src.classes import Smartphone, LawnGrass, Category
 import pytest
 
+from src.classes import Category, LawnGrass, Smartphone
 
-def test_init_smartphone_product(samsung_1_product: 'Smartphone') -> None:
+
+def test_init_smartphone_product(samsung_1_product: "Smartphone") -> None:
     """
     Тест инициализации дочернего класса Smartphone
     """
@@ -16,7 +17,7 @@ def test_init_smartphone_product(samsung_1_product: 'Smartphone') -> None:
     assert samsung_1_product.color == "Серый"
 
 
-def test_init_lawngrass_product(lawngrass_1_product: 'LawnGrass') -> None:
+def test_init_lawngrass_product(lawngrass_1_product: "LawnGrass") -> None:
     """
     Тест инициализации дочернего класса Smartphone
     """
@@ -29,8 +30,9 @@ def test_init_lawngrass_product(lawngrass_1_product: 'LawnGrass') -> None:
     assert lawngrass_1_product.color == "Зеленый"
 
 
-def test_product_summ(samsung_1_product: 'Smartphone', samsung_2_product: 'Smartphone',
-                      lawngrass_1_product: 'LawnGrass') -> None:
+def test_product_summ(
+    samsung_1_product: "Smartphone", samsung_2_product: "Smartphone", lawngrass_1_product: "LawnGrass"
+) -> None:
     """
     Проверяем сложение продуктов одинакового и разного классов
     """
@@ -40,11 +42,12 @@ def test_product_summ(samsung_1_product: 'Smartphone', samsung_2_product: 'Smart
         samsung_1_product + lawngrass_1_product
 
 
-def test_add_product_wrong_type(samsung_1_product: 'Smartphone', samsung_2_product: 'Smartphone') -> None:
+def test_add_product_wrong_type(samsung_1_product: "Smartphone", samsung_2_product: "Smartphone") -> None:
     """
     Проверяем фильтр принадлежности к классу и подклассу в функции добавления продукта
     """
-    category_smartphones = Category("Смартфоны", "Высокотехнологичные смартфоны",
-                                    [samsung_1_product, samsung_2_product])
+    category_smartphones = Category(
+        "Смартфоны", "Высокотехнологичные смартфоны", [samsung_1_product, samsung_2_product]
+    )
     with pytest.raises(TypeError):
         category_smartphones.add_product("Not a product")
