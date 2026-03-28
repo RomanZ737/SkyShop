@@ -1,6 +1,7 @@
 from typing import Any
 
 from src.base_classes import BaseClass, BaseClassCategory
+from src.exeptions_classe import ZeroProductsException
 from src.mixins_classes import PrintMixin
 
 
@@ -18,6 +19,9 @@ class Product(BaseClass, PrintMixin):
         self.description = description
         self.__price = price
         self.quantity = quantity
+        if self.quantity == 0:
+            print('Товар с нулевым количеством не может быть добавлен')
+            raise ValueError
         Product.instances.append(self)
         super().__init__()
 
@@ -104,6 +108,15 @@ class Category(BaseClassCategory):
             result_list += f'{str(item)}\n'
         return result_list
 
+    def middle_price(self):
+        price_summ = 0
+        for obj in self.__products:
+            price_summ += obj.price
+        try:
+            return round(price_summ/len(self.__products), 2)
+        except ZeroDivisionError:
+            return 0
+
 
 class ProductIterator:
     """
@@ -181,10 +194,16 @@ class Order(BaseClassCategory):
         """
         Метод добавляет новый продукт в заказ
         """
-        if issubclass(type(product), Product):
-            self.__products.append(product)
+        try:
+            if product.quantity == 0:
+                raise ZeroProductsException
+        except ZeroProductsException as e:
+            print(e)
         else:
-            raise TypeError('невозможно добавить этот продукт')
+            if issubclass(type(product), Product):
+                self.__products.append(product)
+            else:
+                raise TypeError('невозможно добавить этот продукт')
 
     @property
     def total_price(self) -> Any:
